@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """Defines the BaseModel class."""
-import models
 from uuid import uuid4
 from datetime import datetime
 
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize BaseModel instance."""
+        from models import storage  # Import storage here
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -21,6 +21,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         return "[{}] ({}) {}".format(
@@ -29,6 +30,8 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
+        from models import storage  # Import storage here
+        storage.save()
 
     def to_dict(self):
         obj_dict = self.__dict__.copy()
