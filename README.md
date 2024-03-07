@@ -28,8 +28,9 @@ quit or EOF: Exit the command interpreter.
 Here are a few examples showcasing how to utilize the command interpreter:
 
 "create User"
- "show Place abc"
+"show Place abc"
 "update City xyz name "Capetown"
 "destroy State 123"
+
 
 These examples illustrate the diverse operations available within the command interpreter for efficient management of our AirBnB objects.
