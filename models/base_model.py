@@ -6,7 +6,7 @@ from datetime import datetime
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize BaseModel instance."""
-        from models import storage  # Import storage here
+        from models.engine import storage  # Import storage here
         if kwargs:
             for key, value in kwargs.items():
                 if key != '__class__':
@@ -30,7 +30,7 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
-        from models import storage  # Import storage here
+        from models.engine import storage  # Import storage here
         storage.save()
 
     def to_dict(self):
