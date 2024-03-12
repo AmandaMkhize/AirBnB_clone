@@ -35,13 +35,13 @@ class HBNBCommand(cmd.Cmd):
 
     def precmd(self, line):
         """Reformat command line for advanced command syntax"""
-        _cmd = _cls = _id = _args = ''  
+        _cmd = _cls = _id = _args = ''
 
         if not ('.' in line and '(' in line and ')' in line):
             return line
 
-        try:  
-            pline = line[:]  
+        try:
+            pline = line[:]
 
             _cls = pline[:pline.find('.')]
 
@@ -51,18 +51,18 @@ class HBNBCommand(cmd.Cmd):
 
             pline = pline[pline.find('(') + 1:pline.find(')')]
             if pline:
-                pline = pline.partition(', ')  
+                pline = pline.partition(', ')
 
                 _id = pline[0].replace('\"', '')
 
-                pline = pline[2].strip()  
+                pline = pline[2].strip()
                 if pline:
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
                         _args = pline.replace(',', '')
-                        
+
             line = ' '.join([_cmd, _cls, _id, _args])
 
         except Exception as mess:
@@ -186,7 +186,7 @@ class HBNBCommand(cmd.Cmd):
         print_list = []
 
         if args:
-            args = args.split(' ')[0]  
+            args = args.split(' ')[0]
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
@@ -223,17 +223,17 @@ class HBNBCommand(cmd.Cmd):
         args = args.partition(" ")
         if args[0]:
             c_name = args[0]
-        else:  
+        else:
             print("** class name missing **")
             return
-        if c_name not in HBNBCommand.classes:  
+        if c_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
         args = args[2].partition(" ")
         if args[0]:
             c_id = args[0]
-        else:  
+        else:
             print("** instance id missing **")
             return
 
@@ -245,22 +245,22 @@ class HBNBCommand(cmd.Cmd):
 
         if '{' in args[2] and '}' in args[2] and type(eval(args[2])) is dict:
             kwargs = eval(args[2])
-            args = []  
+            args = []
             for k, v in kwargs.items():
                 args.append(k)
                 args.append(v)
-        else:  
+        else:
             args = args[2]
-            if args and args[0] is '\"':  
+            if args and args[0] == '\"':
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
 
             args = args.partition(' ')
 
-            if not att_name and args[0] is not ' ':
+            if not att_name and args[0] != ' ':
                 att_name = args[0]
-            if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             if not att_val and args[2]:
@@ -272,11 +272,11 @@ class HBNBCommand(cmd.Cmd):
 
         for i, att_name in enumerate(args):
             if (i % 2 == 0):
-                att_val = args[i + 1]  
-                if not att_name:  
+                att_val = args[i + 1]
+                if not att_name:
                     print("** attribute name missing **")
                     return
-                if not att_val:  
+                if not att_val:
                     print("** value missing **")
                     return
                 if att_name in HBNBCommand.types:
@@ -284,7 +284,7 @@ class HBNBCommand(cmd.Cmd):
 
                 new_dict.__dict__.update({att_name: att_val})
 
-        new_dict.save()  
+        new_dict.save()
 
     def help_update(self):
         """Help information for the update class"""
@@ -293,3 +293,4 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
+
