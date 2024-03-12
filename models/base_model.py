@@ -3,6 +3,7 @@
 from uuid import uuid4
 from datetime import datetime
 
+
 class BaseModel:
     def __init__(self, *args, **kwargs):
         """Initialize BaseModel instance."""
@@ -39,4 +40,3 @@ class BaseModel:
         obj_dict['created_at'] = self.created_at.isoformat()
         obj_dict['updated_at'] = self.updated_at.isoformat()
         return obj_dict
-
